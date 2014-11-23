@@ -52,8 +52,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/simpleInterest", simpleInterestHandler).Methods("POST")
 	http.Handle("/", r)
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	
+	log.Fatal(http.ListenAndServe(":9331", nil))
 }
 
 func init() {
