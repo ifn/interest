@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"runtime"
 
 	"github.com/gorilla/mux"
@@ -52,8 +53,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/simpleInterest", simpleInterestHandler).Methods("POST")
 	http.Handle("/", r)
-	
-	log.Fatal(http.ListenAndServe(":9331", nil))
+
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
 
 func init() {
