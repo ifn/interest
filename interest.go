@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"math"
 	"net/http"
 	"os"
 	"runtime"
@@ -62,7 +63,7 @@ func (self *SimpleInterest) SetInterest() {
 
 type CompoundInterestRequest struct {
 	*SimpleInterestRequest
-	Frequency int `json:"frequency"`
+	Frequency float64 `json:"frequency"`
 }
 
 type CompoundInterest struct {
@@ -72,7 +73,11 @@ type CompoundInterest struct {
 }
 
 func (self *CompoundInterest) SetInterest() {
-	self.CompoundInterest = 0
+	if self.Frequency == 0 {
+		return
+	}
+	s := self.Principal * math.Pow(1+self.Interest*1e-2/self.Frequency, self.Frequency*self.Period)
+	self.CompoundInterest = s - self.Principal
 }
 
 func main() {
